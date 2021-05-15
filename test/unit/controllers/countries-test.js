@@ -24,32 +24,32 @@ describe('countries endpoint tests', () => {
       sandbox.stub(countryHelper, 'getCountries').returns(mockCountries);
 
       request(app)
-      .get(`${endpointUrl}`)
-      .set('accept', 'application/json')
-      .expect(200)
-      .end((err, res) => {
-        if (err) {
-          return done(err);
-        }
-        res.body.should.be.an.array;
-        res.body.should.eql(mockCountries);
-        return done();
-      });
+        .get(`${endpointUrl}`)
+        .set('accept', 'application/json')
+        .expect(200)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          res.body.should.be.an.array;
+          res.body.should.eql(mockCountries);
+          return done();
+        });
     });
 
     it('should return empty array if no countries found', function handleNoCountriesFound(done) {
       sandbox.stub(countryHelper, 'getCountries').returns([]);
 
       request(app)
-      .get(`${endpointUrl}`)
-      .set('accept', 'application/json')
-      .expect(200, [])
-      .end(err => {
-        if (err) {
-          return done(err);
-        }
-        return done();
-      });
+        .get(`${endpointUrl}`)
+        .set('accept', 'application/json')
+        .expect(200, [])
+        .end((err) => {
+          if (err) {
+            return done(err);
+          }
+          return done();
+        });
     });
 
     it('should return 500 if error getting countries', function handleErrorGettingCountries(done) {
@@ -57,15 +57,33 @@ describe('countries endpoint tests', () => {
       sandbox.stub(countryHelper, 'getCountries').throws(error);
 
       request(app)
-      .get(`${endpointUrl}`)
-      .set('accept', 'application/json')
-      .expect(500)
-      .end(err => {
-        if (err) {
-          return done(err);
-        }
-        return done();
-      });
+        .get(`${endpointUrl}`)
+        .set('accept', 'application/json')
+        .expect(500)
+        .end((err) => {
+          if (err) {
+            return done(err);
+          }
+          return done();
+        });
+    });
+  });
+
+  describe('get countries v2', function getCountries() {
+    const endpointUrl = config.routes.controllerRootUrl + '/v2/countries';
+
+    it('should return a list of countries', function handleGettingCountries(done) {
+      request(app)
+        .get(`${endpointUrl}`)
+        .set('accept', 'application/json')
+        .expect(200)
+        .end((err, res) => {
+          if (err) {
+            return done(err);
+          }
+          res.body.should.be.an.array;
+          return done();
+        });
     });
   });
 });

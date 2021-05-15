@@ -14,7 +14,7 @@ function populationResponse(country, date, population = 0) {
 }
 exports.getPopulation = co.wrap(async function getPopulation(req, res, next) {
   try {
-    let countries = req.query.countries;
+    let countries = req.query.countries || [];
     countries = countries.filter((country) => country);
 
     const sort = req.query.sort;
