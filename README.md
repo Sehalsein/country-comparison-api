@@ -35,12 +35,28 @@ Zip your solution, upload it somewhere, and send us a link to the zipped file.
 
 ### Bonus
 1. Some scenarios to consider (leave your thoughts inline in your code or edit the README):
-  * How efficient is your code?  What are some ways that you could improve performance?
+  * How efficient is your code?  What are some ways that you could improve performance? 
+    - Two Api's developed is efficient as possible. 
+    - Performance can be improved by adding some sort of caching mechanism.
+  
   * Suppose we expect this API to be hit 1000s of times a second.  How can we handle the load?
+    - A caching mechanism needs to be implemented if we are expecting 1000s req/sec
+    - The realtime info of population is not required so it can be store in a cache like redis for faster access
+    - Calling 1000's 3rd party API's per second is not a valid method. Most 3rd party providers have a limit on the no of request. so its better to avoid calling external api frequently (In this particular use case)
+    
   * What if the 3rd party provider is not available?  How resilient is our API?
+    - If caching mechanism is implemented data can be shown from cache.
+    - Otherwise appropriate error message needs to be returned
+    
   * What if the requirement for the new endpoint was to also allow the consumer to compare populations for any given date.  How would you modify your implementation?
+    - Population endpoint can have one more query param for date. which fetches based on the particular date
+
   * What if we have a database of users and we wanted to make our API smarter by defaulting comparisons to always include the population of the current user's country.  How could we accomplish this?
+    - Default country of user can be encoded in a JWT token. JWT token needs to be sent with every request, So for every request the default country data is available.
+
   * What if we wanted to keep a tally of the most frequently requested countries and have this be available to consumers.  How could we accomplish this?
+    - By Implementing a caching mechanism. The most frequently used request can be cached
+
 
 2. Dockerize the API
 
