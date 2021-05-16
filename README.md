@@ -40,6 +40,7 @@ Zip your solution, upload it somewhere, and send us a link to the zipped file.
     - Performance can be improved by adding some sort of caching mechanism.
   
   * Suppose we expect this API to be hit 1000s of times a second.  How can we handle the load?
+    - Having multiple instance of the server behind a load balancer will help handle this load.
     - A caching mechanism needs to be implemented if we are expecting 1000s req/sec
     - The realtime info of population is not required so it can be store in a cache like redis for faster access
     - Calling 1000's 3rd party API's per second is not a valid method. Most 3rd party providers have a limit on the no of request. so its better to avoid calling external api frequently (In this particular use case)
